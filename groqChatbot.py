@@ -92,5 +92,3 @@ async def generate_chapter(data: ChapterPrompt):
         return {"error": str(e)}
 
     return {"reply": chapter}
-
-    uvicorn.run(app, host="0.0.0.0", port=8004)
