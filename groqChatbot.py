@@ -1,9 +1,5 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-<<<<<<< HEAD
-from dotenv import load_dotenv
-=======
->>>>>>> ba5ffe989360b372cd8d27dfe7e1cb0f819f68dc
 import uvicorn
 import asyncio
 import os
@@ -11,12 +7,6 @@ import requests
 
 app = FastAPI()
 
-<<<<<<< HEAD
-load_dotenv()
-print("🔑 Key loaded?", os.getenv("GROQ_API_KEY"))
-def get_groq_response(prompt):
-    url = "https://api.groq.com/openai/v1/chat/completions"
-=======
 def get_groq_response(prompt):
     url = "https://api.groq.com/openai/v1/chat/completions"
 
@@ -45,33 +35,11 @@ def get_groq_response(prompt):
 
 class ChapterPrompt(BaseModel):
     description: str
->>>>>>> ba5ffe989360b372cd8d27dfe7e1cb0f819f68dc
 
-    headers = {
-        "Authorization": f"Bearer {os.getenv('GROQ_API_KEY')}",
-        "Content-Type": "application/json",
-    }
+@app.post("/agent/generate-chapter")
+async def generate_chapter(data: ChapterPrompt):
+    description = data.description.strip()
 
-<<<<<<< HEAD
-    data = {
-       "model": "llama-3.3-70b-versatile",
-        "messages": [
-            {
-                "role": "system",
-                "content": "Tu es un assistant pédagogique intelligent et bienveillant.",
-            },
-            {
-                "role": "user",
-                "content": prompt,
-            },
-        ],
-    }
-
-    response = requests.post(url, json=data, headers=headers)
-    response.raise_for_status()
-    return response.json()["choices"][0]["message"]["content"]
-
-=======
     if not description:
         return {"error": "Veuillez entrer une description."}
 
@@ -125,6 +93,4 @@ class ChapterPrompt(BaseModel):
 
     return {"reply": chapter}
 
->>>>>>> ba5ffe989360b372cd8d27dfe7e1cb0f819f68dc
-if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8004)
