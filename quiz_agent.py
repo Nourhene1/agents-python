@@ -42,7 +42,7 @@ async def get_next_question(request: Request):
 
     # Appel au coach
     try:
-        res = requests.get("http://localhost:8002/coach/motivate")
+        res = requests.get("https://agents-python-coach.onrender.com/coach/motivate")
         coach_message = res.json().get("message", "")
     except Exception as e:
         print("❌ Coach fallback:", str(e))
@@ -97,7 +97,7 @@ async def init_quiz(request: Request):
 
 def get_coach_message():
     try:
-        res = requests.get("http://localhost:8002/coach/motivate")
+        res = requests.get("https://agents-python-coach.onrender.com/coach/motivate")
         data = res.json()
         return data.get("message", "Keep going! 💪")
     except Exception as e:
